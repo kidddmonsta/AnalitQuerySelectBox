@@ -1,33 +1,49 @@
 [{
   "ID": 1,
   "Indicator": "Продолжительность рассмотрения заявок",
-  "Time": "2015-01-01T00:00:00.000",
   "Measures": "Количество поданных заявок",
   "Dimensions": "Страна",
+  "Time_Period_Start": "2015-01-01T00:00:00.000",
+  "Time_Period_Finish": "2015-01-01T00:00:00.000",
+  "Granularity": "Год",
   "Filters": "По возрастанию",
-  "Visualization": "Таблица"
+  "Visualization": "Таблица",
+  "Prefilters": "Region_MSK",
+  "Fiter_Operator": ">"
 }, {
   "ID": 2,
   "Indicator": "Порядок рассмотрения заявок",
-  "Time": "2015-02-01T00:00:00.000",
   "Measures": "Количество рассмотренных заявок",
   "Dimensions": "Регион",
+  "Time_Period_Start": "2015-02-01T00:00:00.000",
+  "Time_Period_Finish": "2015-02-01T00:00:00.000",
+  "Granularity": "Пол года",
   "Filters": "По убыванию",
-  "Visualization": "График"
+  "Visualization": "График",
+  "Prefilters": "Префильтр_2",
+  "Fiter_Operator": "<"
 }, {
   "ID": 3,
   "Indicator": "Правила рассмотрения заявок",
-  "Time": "2015-03-01T00:00:00.000",
   "Measures": "Количество приостановленных заявок",
   "Dimensions": "Город",
+  "Time_Period_Start": "2015-03-01T00:00:00.000",
+  "Time_Period_Finish": "2015-03-01T00:00:00.000",
+  "Granularity": "Месяц",
   "Filters": "По дате",
-  "Visualization": "Диаграмма"
+  "Visualization": "Диаграмма",
+  "Prefilters": "Префильтр_3",
+  "Fiter_Operator": "="
 }, {
   "ID": 4,
   "Indicator": "Первичная подача заявки",
-  "Time": "2015-04-01T00:00:00.000",
   "Measures": "Общее количество заявок",
   "Dimensions": "Населённый пункт",
+  "Time_Period_Start": "2015-04-01T00:00:00.000",
+  "Time_Period_Finish": "2015-04-01T00:00:00.000",
+  "Granularity": "День",
   "Filters": "По типу заявки",
-  "Visualization": "Паттерн"
+  "Visualization": "Паттерн",
+  "Prefilters": "Префильтр_4",
+  "Fiter_Operator": "!="
 }]

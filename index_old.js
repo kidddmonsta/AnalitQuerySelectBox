@@ -1,12 +1,12 @@
 $(function(){
     var dataGrid;
 
-    var makeAsyncDataSource = function(jsonFile){
+    var makeAsyncDataSource = function(url, key){
         return new DevExpress.data.CustomStore({
             loadMode: "raw",
-            key: "ID",
+            key: key,
             load: function() {
-                return $.getJSON("data/" + jsonFile);
+                return $.getJSON(url);
             }
         });
     };
@@ -23,15 +23,44 @@ $(function(){
         });
         return result;
     };
+var test = makeAsyncDataSource("http://10.0.3.209:7002/api/v2/indicator-core/indicator/indicatorForAnalyticQuery/meta", "measureList");
+console.log(test);
 
-    $("#select-indicator").dxSelectBox({
-        displayExpr: "Indicator",
-        dataSource: makeAsyncDataSource("customers.json"),
-        value: "ID",
-        /*onValueChanged: function(data) {
-            form.option("formData", data.value);
-        }*/
+    $.getJSON( "http://10.0.3.209:7002/api/v2/indicator-core/indicator/indicatorForAnalyticQuery/meta", function( data ) {
+    console.log(data);
+
+        var DataSource = function(jsonFile){
+            return new DevExpress.data.CustomStore({
+                loadMode: "raw",
+                key: "code",
+                load: function() {
+                    return jsonFile;
+                }
+            });
+        };
+        $("#select-indicator").dxSelectBox({
+            displayExpr: "ru",
+            dataSource: DataSource(data.measureList),
+            value: "code",
+            /*onValueChanged: function(data) {
+                form.option("formData", data.value);
+            }*/
+
+        });
+
     });
+
+/*
+$("#select-indicator").dxSelectBox({
+        displayExpr: "Indicator",
+        dataSource: makeAsyncDataSource("http://10.0.3.209:7002/api/v2/indicator-core/indicator/indicatorForAnalyticQuery/meta", "measureList"),
+        value: "code",
+        /!*onValueChanged: function(data) {
+            form.option("formData", data.value);
+        }*!/
+
+    });
+*/
 
     $("#Indicator").dxDropDownBox({
         value: [3],
@@ -69,18 +98,120 @@ $(function(){
         }
     });
 
-    $("#Time").dxDropDownBox({
+    $("#select-timeStart").dxSelectBox({
+        displayExpr: "Time_Period_Start",
+        dataSource: makeAsyncDataSource("customers.json"),
+        value: "ID",
+        /*onValueChanged: function(data) {
+            form.option("formData", data.value);
+        }*/
+
+    });
+
+    $("#TimeStart").dxDropDownBox({
         value: [3],
         valueExpr: "ID",
         placeholder: "Select a value...",
-        displayExpr: "Time",
+        displayExpr: "Time_Period_Start",
         showClearButton: true,
         dataSource: makeAsyncDataSource("customers.json"),
         contentTemplate: function(e){
             var value = e.component.option("value"),
                 $dataGrid = $("<div>").dxDataGrid({
                     dataSource: e.component.option("dataSource"),
-                    columns: ["Time"],
+                    columns: ["Time_Period_Start"],
+                    hoverStateEnabled: true,
+                    paging: { enabled: true, pageSize: 10 },
+                    filterRow: { visible: true },
+                    scrolling: { mode: "infinite" },
+                    height: 345,
+                    selection: { mode: "multiple" },
+                    selectedRowKeys: value,
+                    onSelectionChanged: function(selectedItems){
+                        var keys = selectedItems.selectedRowKeys;
+                        e.component.option("value", keys);
+                    }
+                });
+
+            dataGrid = $dataGrid.dxDataGrid("instance");
+
+            e.component.on("valueChanged", function(args){
+                var value = args.value;
+                dataGrid.selectRows(value, false);
+            });
+
+            return $dataGrid;
+        }
+    });
+
+    $("#select-timeFinish").dxSelectBox({
+        displayExpr: "Time_Period_Finish",
+        dataSource: makeAsyncDataSource("customers.json"),
+        value: "ID",
+        /*onValueChanged: function(data) {
+            form.option("formData", data.value);
+        }*/
+
+    });
+
+    $("#select-granularity").dxSelectBox({
+        displayExpr: "Granularity",
+        dataSource: makeAsyncDataSource("customers.json"),
+        value: "ID",
+        /*onValueChanged: function(data) {
+            form.option("formData", data.value);
+        }*/
+
+    });
+
+    $("#TimeFinish").dxDropDownBox({
+        value: [3],
+        valueExpr: "ID",
+        placeholder: "Select a value...",
+        displayExpr: "Time_Period_Finish",
+        showClearButton: true,
+        dataSource: makeAsyncDataSource("customers.json"),
+        contentTemplate: function(e){
+            var value = e.component.option("value"),
+                $dataGrid = $("<div>").dxDataGrid({
+                    dataSource: e.component.option("dataSource"),
+                    columns: ["Time_Period_Finish"],
+                    hoverStateEnabled: true,
+                    paging: { enabled: true, pageSize: 10 },
+                    filterRow: { visible: true },
+                    scrolling: { mode: "infinite" },
+                    height: 345,
+                    selection: { mode: "multiple" },
+                    selectedRowKeys: value,
+                    onSelectionChanged: function(selectedItems){
+                        var keys = selectedItems.selectedRowKeys;
+                        e.component.option("value", keys);
+                    }
+                });
+
+            dataGrid = $dataGrid.dxDataGrid("instance");
+
+            e.component.on("valueChanged", function(args){
+                var value = args.value;
+                dataGrid.selectRows(value, false);
+            });
+
+            return $dataGrid;
+        }
+    });
+
+    $("#Prefilters").dxDropDownBox({
+        value: [3],
+        valueExpr: "ID",
+        placeholder: "Select a value...",
+        displayExpr: "Prefilters",
+        showClearButton: true,
+        dataSource: makeAsyncDataSource("customers.json"),
+        contentTemplate: function(e){
+            var value = e.component.option("value"),
+                $dataGrid = $("<div>").dxDataGrid({
+                    dataSource: e.component.option("dataSource"),
+                    columns: ["Prefilters"],
                     hoverStateEnabled: true,
                     paging: { enabled: true, pageSize: 10 },
                     filterRow: { visible: true },
@@ -211,6 +342,16 @@ $(function(){
 
             return $dataGrid;
         }
+    });
+
+    $("#select-filter").dxSelectBox({
+        displayExpr: "Indicator",
+        dataSource: makeAsyncDataSource("customers.json"),
+        value: "ID",
+        /*onValueChanged: function(data) {
+            form.option("formData", data.value);
+        }*/
+
     });
 
     $("#Visualization").dxDropDownBox({
