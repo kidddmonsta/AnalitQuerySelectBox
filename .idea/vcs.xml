@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/analyt-query-builder" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/ololo/analyt-query-builder" vcs="Git" />
   </component>
 </project>
